@@ -11,12 +11,19 @@ use std::env;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenvy::dotenv().ok();
-    if matches!(
-        env::args().nth(1).as_deref(),
-        Some("help" | "--help" | "-h")
-    ) {
-        println!("{}", help_text());
-        return Ok(());
+    match env::args().nth(1).as_deref() {
+        Some("help" | "--help" | "-h") => {
+            println!("{}", help_text());
+            return Ok(());
+        }
+        Some("version" | "--version" | "-V") => {
+            println!("plan-path {}", env!("PLAN_PATH_BUILD_VERSION"));
+            return Ok(());
+        }
+        Some(argument) => {
+            return Err(format!("unknown command: {argument}\n\n{}", help_text()).into());
+        }
+        None => {}
     }
     let port = env_usize("PLAN_PATH_HTTP_PORT", 3100)?;
     let max_focus_calls = env_usize("PLAN_PATH_MAX_FOCUS_CALLS", 50)?;
@@ -70,6 +77,7 @@ fn help_text() -> &'static str {
 USAGE:
   plan-path
   plan-path help
+  plan-path version
 
 ENVIRONMENT:
   MINEPLAN_MCP_URL           mineplan endpoint (default: http://127.0.0.1:3000/mcp)

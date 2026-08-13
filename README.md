@@ -79,6 +79,13 @@ cargo run
 
 利用可能な設定は`cargo run -- --help`でも確認できます。
 
+バイナリのバージョンは`--version`または`-V`で確認できます。リリースバイナリにはGitタグを埋め込みます。
+
+```sh
+plan-path -V
+# plan-path v0.1.0
+```
+
 ## 探索モデル
 
 探索状態は`(node, current_edge_name)`です。

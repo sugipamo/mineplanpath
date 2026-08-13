@@ -83,7 +83,7 @@ pub async fn handle_json_request(analyzer: &Analyzer, request: Value) -> Value {
         "initialize" => Ok(json!({
             "protocolVersion":"2025-06-18",
             "capabilities":{"tools":{}},
-            "serverInfo":{"name":"plan-path","version":env!("CARGO_PKG_VERSION")}
+            "serverInfo":{"name":"plan-path","version":env!("PLAN_PATH_BUILD_VERSION")}
         })),
         "ping" => Ok(json!({})),
         "notifications/initialized" | "notifications/cancelled" => return Value::Null,
